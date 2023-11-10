@@ -1,11 +1,8 @@
 return {
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    build = ":Copilot auth",
+  { -- further customize the options set by the community
+    "copilot.lua",
     opts = {
       suggestion = {
-        enabled = false,
         keymap = {
           accept = "<C-l>",
           accept_word = false,
@@ -14,11 +11,6 @@ return {
           prev = "<C-,>",
           dismiss = "<C/>",
         },
-      },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
       },
     },
   },
