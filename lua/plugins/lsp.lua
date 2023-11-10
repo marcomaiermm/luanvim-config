@@ -1,4 +1,3 @@
--- { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
 return {
   {
     "neovim/nvim-lspconfig",
