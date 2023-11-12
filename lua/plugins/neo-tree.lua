@@ -1,4 +1,37 @@
-local Util = require("lazy.util")
+local system_open = function(path)
+  -- TODO: REMOVE WHEN DROPPING NEOVIM <0.10
+  if vim.ui.open then return vim.ui.open(path) end
+
+  local stat = vim.loop.fs_stat(path)
+  if not stat then
+    -- Handle error if path does not exist
+    M.notify("Path does not exist!", vim.log.levels.ERROR)
+    return
+  end
+
+  local cmd
+  if vim.fn.has "win32" == 1 and vim.fn.executable "explorer" == 1 then
+    cmd = { "cmd.exe", "/K", "explorer" }
+    if stat.type == "directory" then
+      table.insert(cmd, "/select,")
+    end
+  elseif vim.fn.has "unix" == 1 and vim.fn.executable "xdg-open" == 1 then
+    cmd = { "xdg-open" }
+  elseif (vim.fn.has "mac" == 1 or vim.fn.has "unix" == 1) and vim.fn.executable "open" == 1 then
+    cmd = { "open" }
+    if stat.type ~= "directory" then
+      table.insert(cmd, "-R")
+    end
+  end
+
+  if not cmd then
+    M.notify("Available system opening tool not found!", vim.log.levels.ERROR)
+    return
+  end
+
+  vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand "<cfile>" }), { detach = true })
+end
+
 
 return {
   {
@@ -7,14 +40,11 @@ return {
       auto_clean_after_session_restore = true,
       close_if_last_window = true,
       filesystem = {
-        bind_to_cwd = false,
-        follow_current_file = { enabled = true },
         hijack_netrw_behavior = "open_current",
-        use_libuv_file_watcher = true,
       },
       commands = {
         system_open = function(state)
-          vim.ui.open(state.tree:get_node():get_id())
+          (vim.ui.open or system_open)(state.tree:get_node():get_id())
         end,
         parent_or_close = function(state)
           local node = state.tree:get_node()
@@ -36,20 +66,11 @@ return {
             state.commands.open(state)
           end
         end,
-        find_in_dir = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
-          require("telescope.builtin").find_files {
-            cwd = node.type == "directory" and path or vim.fn.fnamemodify(path, ":h"),
-          }
-        end,
       },
       window = {
         width = 30,
         mappings = {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
-          ["[b"] = "prev_source",
-          ["]b"] = "next_source",
           O = "system_open",
           h = "parent_or_close",
           l = "child_or_open",
@@ -61,26 +82,5 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      local function on_move(data)
-        Util.lsp.on_rename(data.source, data.destination)
-      end
-
-      local events = require("neo-tree.events")
-      opts.event_handlers = opts.event_handlers or {}
-      vim.list_extend(opts.event_handlers, {
-        { event = events.FILE_MOVED,   handler = on_move },
-        { event = events.FILE_RENAMED, handler = on_move },
-      })
-      require("neo-tree").setup(opts)
-      vim.api.nvim_create_autocmd("TermClose", {
-        pattern = "*lazygit",
-        callback = function()
-          if package.loaded["neo-tree.sources.git_status"] then
-            require("neo-tree.sources.git_status").refresh()
-          end
-        end,
-      })
-    end,
   },
 }

@@ -3,15 +3,7 @@ return {
   keys = {
     { "<leader>/",        false },
     { "<leader><leader>", false },
-    { "<leader>ff",       "<cmd>Telescope find_files<cr>",  desc = "Find Files" },
     { "<leader>fc",       "<cmd>Telescope grep_string<cr>", desc = "Find word under cursor" },
-    {
-      "<leader>fF",
-      function()
-        require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
-      end,
-      desc = "Find all Files",
-    },
     {
       "<leader>fw",
       function()
@@ -37,7 +29,7 @@ return {
       path_display = { "truncate" },
       sorting_strategy = "ascending",
       layout_config = {
-        horizontal = { prompt_position = "top", preview_width = 0.55 },
+        horizontal = { prompt_position = "top", preview_width = 0.75 },
         vertical = { mirror = false },
         width = 0.87,
         height = 0.80,
