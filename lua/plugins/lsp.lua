@@ -1,6 +1,18 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        htmx = {
+          filetypes = { "html", "templ" },
+          init_options = {
+            userLanguages = {
+              templ = "html",
+            },
+          },
+        },
+      },
+    },
     init = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = { "<C-k>", mode = { "i" }, false }
@@ -8,9 +20,11 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    opts = function(_, opts)
-      opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "goimports", "gofumpt" })
-    end,
+    opts = {
+      ensure_installed = {
+        "htmx-lsp"
+      }
+    }
   }
+
 }

@@ -1,11 +1,7 @@
 local system_open = function(path)
-  -- TODO: REMOVE WHEN DROPPING NEOVIM <0.10
-  if vim.ui.open then return vim.ui.open(path) end
-
   local stat = vim.loop.fs_stat(path)
   if not stat then
     -- Handle error if path does not exist
-    M.notify("Path does not exist!", vim.log.levels.ERROR)
     return
   end
 
@@ -25,7 +21,6 @@ local system_open = function(path)
   end
 
   if not cmd then
-    M.notify("Available system opening tool not found!", vim.log.levels.ERROR)
     return
   end
 
