@@ -51,7 +51,6 @@ return {
           ["[b"] = "prev_source",
           ["]b"] = "next_source",
           O = "system_open",
-          Y = "copy_selector",
           h = "parent_or_close",
           l = "child_or_open",
           o = "open",

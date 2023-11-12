@@ -1,5 +1,13 @@
 return {
   {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "htmx-lsp",
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
@@ -11,14 +19,6 @@ return {
             },
           },
         },
-      },
-    },
-  },
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "htmx-lsp",
       },
     },
   },

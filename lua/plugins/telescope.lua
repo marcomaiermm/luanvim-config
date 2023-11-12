@@ -1,9 +1,10 @@
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
-    { "<leader>/", false },
-    { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
-    { "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "Find word under cursor" },
+    { "<leader>/",        false },
+    { "<leader><leader>", false },
+    { "<leader>ff",       "<cmd>Telescope find_files<cr>",  desc = "Find Files" },
+    { "<leader>fc",       "<cmd>Telescope grep_string<cr>", desc = "Find word under cursor" },
     {
       "<leader>fF",
       function()
