@@ -22,7 +22,8 @@ return {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "htmx-lsp"
+        "htmx-lsp",
+        "templ",
       }
     }
   }
