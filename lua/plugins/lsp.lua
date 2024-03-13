@@ -11,6 +11,13 @@ return {
             },
           },
         },
+        -- tsserver = {
+        --   settings = {
+        --     implicitProjectConfiguration = {
+        --       checkJs = true,
+        --     },
+        --   },
+        -- },
       },
     },
     init = function()
@@ -24,8 +31,7 @@ return {
       ensure_installed = {
         "htmx-lsp",
         "templ",
-      }
-    }
-  }
-
+      },
+    },
+  },
 }

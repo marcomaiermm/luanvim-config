@@ -9,6 +9,14 @@ return {
         },
         opts = { skip = true },
       })
-    end
-  }
+      table.insert(opts.routes, {
+        filter = {
+          event = "lsp",
+          kind = "progress",
+          find = "jdtls",
+        },
+        opts = { skip = true },
+      })
+    end,
+  },
 }
