@@ -11,6 +11,13 @@ return {
             },
           },
         },
+        -- tsserver = {
+        --   settings = {
+        --     implicitProjectConfiguration = {
+        --       checkJs = true,
+        --     },
+        --   },
+        -- },
       },
     },
     init = function()
