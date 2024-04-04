@@ -52,6 +52,30 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    keys = {
+      {
+        "<leader>fw",
+        function()
+          require("telescope.builtin").live_grep()
+        end,
+        desc = "Find words",
+      },
+      { "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "Find word under cursor" },
+      {
+        "<leader>fW",
+        function()
+          require("telescope.builtin").live_grep({
+            additional_args = function(args)
+              return vim.list_extend(args, { "--hidden", "--no-ignore" })
+            end,
+          })
+        end,
+        desc = "Find words in all files",
+      },
+      { "<leader>fl", "<cmd>Telescope resume<cr>", desc = "Resume Find" },
+      { "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
+      { "<leader>fD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
+    },
     opts = {
       defaults = {
         sorting_strategy = "ascending",

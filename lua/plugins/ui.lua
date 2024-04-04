@@ -9,23 +9,13 @@ M.lazy = [[
        ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝
   ]]
 
-M.hydra = [[
-	                                   
-	                                   
-	                                   
-	   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          
-	    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       
-	          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     
-	           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    
-	          ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   
-	   ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  
-	  ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   
-	 ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  
-	 ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ 
-	      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     
-	       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     
-	                                   
-]]
+local function tableToMultilineString(tbl)
+  local result = ""
+  for _, line in ipairs(tbl) do
+    result = result .. line .. "\n"
+  end
+  return result
+end
 
 return {
   {
@@ -50,9 +40,12 @@ return {
   },
   {
     "goolord/alpha-nvim",
+    dependencies = { "MaximilianLloyd/ascii.nvim" },
     opts = function()
       local dashboard = require("alpha.themes.dashboard")
-      local logo = M.hydra
+      local ascii = require("ascii")
+      -- https://github.com/MaximilianLloyd/ascii.nvim/tree/master/lua/ascii
+      local logo = tableToMultilineString(ascii.art.animals.cats.boxy)
 
       dashboard.section.header.val = vim.split(logo, "\n")
   -- stylua: ignore
