@@ -51,7 +51,28 @@ return {
     },
   },
   {
+    "folke/flash.nvim",
+    keys = {
+      { "s", mode = { "n", "x", "o" }, false },
+      {
+        "<M-s>",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
+      },
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
     keys = {
       {
         "<leader>fw",

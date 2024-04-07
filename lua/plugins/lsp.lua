@@ -1,7 +1,6 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "pmizio/typescript-tools.nvim" },
     opts = {
       -- make sure mason installs the server
       servers = {
