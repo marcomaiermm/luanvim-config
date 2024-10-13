@@ -1,49 +1,41 @@
+vim.filetype.add({ extension = { templ = "templ" } })
+
 return {
+  {
+    "marilari88/twoslash-queries.nvim",
+    ft = {
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    config = true,
+  },
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    ft = {
+      "typescript",
+      "typescriptreact",
+      "typescript.tsx",
+    },
+    config = true,
+  },
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- make sure mason installs the server
+      inlay_hints = {
+        enabled = false,
+      },
       servers = {
-        ---@type lspconfig.options.tsserver
-        tsserver = {
-          enabled = false, -- only use typescript tools
-          keys = {
-            {
-              "<leader>co",
-              "<cmd>TSToolsOrganizeImports<cr>",
-              desc = "Organize Imports",
-            },
-            {
-              "<leader>cR",
-              "<cmd>TSToolsRemoveUnusedImports<cr>",
-              desc = "Remove Unused Imports",
-            },
-          },
-          ---@diagnostic disable-next-line: missing-fields
-          settings = {
-            completions = {
-              completeFunctionCalls = true,
-            },
-          },
+        tailwindcss = {
+          filetypes_include = { "templ" },
+          init_options = { userLanguages = { templ = "html" } },
         },
       },
-      -- no eslint for formatting
-      setup = {
-        eslint = function()
-          require("lazyvim.util").lsp.on_attach(function(client)
-            if client.name == "eslint" then
-              client.server_capabilities.documentFormattingProvider = true
-            elseif client.name == "tsserver" then
-              client.server_capabilities.documentFormattingProvider = false
-            end
-          end)
-        end,
+    },
+    setup = {
+      templ = {
+        filetypes = { "html", "templ" },
       },
     },
-  },
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
   },
 }
